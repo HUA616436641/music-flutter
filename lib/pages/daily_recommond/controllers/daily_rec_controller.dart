@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/daily_recommond/data/daily_recommond_repository.dart';
+import 'package:get/get.dart';
 
 class DailyRecController extends GetxController {
   final IDailyRecRepository dailyRecRepository;

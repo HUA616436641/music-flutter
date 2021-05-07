@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/home/controllers/home_controller.dart';
+import 'package:get/get.dart';
 import '../data/home_api_provider.dart';
 
 import '../data/home_repository.dart';

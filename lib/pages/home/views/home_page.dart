@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/home/controllers/home_controller.dart';
-import 'package:cloud_music/pages/home/views/drawer_view.dart';
 import 'package:cloud_music/pages/home/widgets/home_body.dart';
 import 'package:cloud_music/pages/home/widgets/home_footer.dart';
 import 'package:cloud_music/pages/home/widgets/home_header.dart';
 import 'package:cloud_music/widgets/blur_background.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'drawer_view.dart';
 
 class HomePage extends GetView<HomeController> {
   @override

@@ -1,6 +1,6 @@
+import 'package:cloud_music/pages/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/pages/home/controllers/home_controller.dart';
 
 class HomeHeader extends GetView<HomeController> {
   @override

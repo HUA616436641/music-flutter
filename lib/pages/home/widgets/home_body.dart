@@ -1,9 +1,10 @@
+import 'package:cloud_music/pages/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/pages/home/controllers/home_controller.dart';
-import 'package:cloud_music/pages/home/widgets/custom_page_navigation.dart';
+
+import 'custom_page_navigation.dart';
 
 class HomeBody extends GetView<HomeController> {
   @override

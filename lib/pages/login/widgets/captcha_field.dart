@@ -1,9 +1,10 @@
+import 'package:cloud_music/pages/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/pages/login/controllers/login_controller.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class CaptchaField extends StatelessWidget {
+  LoginController get _controller => Get.find<LoginController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +21,7 @@ class CaptchaField extends StatelessWidget {
                   color: Colors.white,
                   size: 28,
                 ),
-                onPressed: Get.find<LoginController>().toMobilePage),
+                onPressed: _controller.toMobilePage),
           ),
           SizedBox(height: 24),
           const Text(
@@ -38,7 +39,7 @@ class CaptchaField extends StatelessWidget {
             children: <Widget>[
               PinPut(
                 fieldsCount: 4,
-                focusNode: Get.find<LoginController>().focusNode,
+                focusNode: _controller.focusNode,
                 withCursor: true,
                 autofocus: true,
                 eachFieldWidth: 50,
@@ -50,33 +51,34 @@ class CaptchaField extends StatelessWidget {
                 followingFieldDecoration: BoxDecoration(color: Colors.black54),
                 selectedFieldDecoration: BoxDecoration(color: Colors.black54),
                 submittedFieldDecoration: BoxDecoration(color: Colors.black54),
+                onSubmit: _controller.login,
               ),
               SizedBox(height: 36),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40))),
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                      (states) {
-                        if (states.contains(MaterialState.disabled)) {
-                          return Colors.redAccent.withOpacity(0.4);
-                        }
-                        return Colors.red.withOpacity(0.9);
-                      },
-                    ),
-                  ),
-                  onPressed: !Get.find<LoginController>().nextEnabled.value
-                      ? null
-                      : Get.find<LoginController>().toCaptcha,
-                  child: const Text(
-                    '登录',
-                    style: TextStyle(fontSize: 18, letterSpacing: 2),
-                  ),
-                ),
-              )
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 56,
+              //   child: ElevatedButton(
+              //     style: ButtonStyle(
+              //       shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(40))),
+              //       backgroundColor: MaterialStateProperty.resolveWith(
+              //         (states) {
+              //           if (states.contains(MaterialState.disabled)) {
+              //             return Colors.redAccent.withOpacity(0.4);
+              //           }
+              //           return Colors.red.withOpacity(0.9);
+              //         },
+              //       ),
+              //     ),
+              //     onPressed: !Get.find<LoginController>().nextEnabled.value
+              //         ? null
+              //         : Get.find<LoginController>().sendCaptcha,
+              //     child: const Text(
+              //       '登录',
+              //       style: TextStyle(fontSize: 18, letterSpacing: 2),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ],

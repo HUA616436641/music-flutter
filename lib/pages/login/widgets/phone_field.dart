@@ -1,7 +1,7 @@
+import 'package:cloud_music/pages/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/pages/login/controllers/login_controller.dart';
 
 class PhoneField extends StatelessWidget {
   @override
@@ -69,7 +69,7 @@ class PhoneField extends StatelessWidget {
                     ),
                     onPressed: !Get.find<LoginController>().nextEnabled.value
                         ? null
-                        : Get.find<LoginController>().toCaptcha,
+                        : Get.find<LoginController>().sendCaptcha,
                     child: const Text(
                       '获取验证码',
                       style: TextStyle(fontSize: 18, letterSpacing: 2),

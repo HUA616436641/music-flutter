@@ -1,6 +1,6 @@
+import 'package:cloud_music/widgets/blur_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/widgets/blur_background.dart';
 
 class DrawerView extends GetView {
   @override

@@ -1,8 +1,8 @@
+import 'package:cloud_music/pages/home/domain/entity/home_model.dart';
+import 'package:cloud_music/pages/home/domain/entity/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
-import 'package:cloud_music/pages/home/domain/entity/home_model.dart';
-import 'package:cloud_music/pages/home/domain/entity/menu_item.dart';
 
 import '../domain/adapters/repository_adapter.dart';
 

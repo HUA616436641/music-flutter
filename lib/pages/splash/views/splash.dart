@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/splash/controllers/main_controller.dart';
 import 'package:cloud_music/widgets/blur_background.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashPage extends GetView<MainController> {
   @override

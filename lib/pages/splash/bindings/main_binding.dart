@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/splash/controllers/main_controller.dart';
+import 'package:get/get.dart';
 
 class MainBinding extends Bindings {
   @override

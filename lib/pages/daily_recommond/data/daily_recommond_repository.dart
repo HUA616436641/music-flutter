@@ -1,5 +1,6 @@
-import 'package:cloud_music/pages/daily_recommond/data/daily_recommond_provider.dart';
 import 'package:cloud_music/pages/home/domain/entity/banner.dart';
+
+import 'daily_recommond_provider.dart';
 
 abstract class IDailyRecRepository {
   Future<List<SongList>> getDailyRecSongs();

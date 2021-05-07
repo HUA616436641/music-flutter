@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/login/controllers/login_controller.dart';
 import 'package:cloud_music/pages/login/widgets/captcha_field.dart';
 import 'package:cloud_music/pages/login/widgets/phone_field.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends GetView<LoginController> {
   @override

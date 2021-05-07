@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:cloud_music/pages/home/domain/entity/banner.dart';
+import 'package:get/get.dart';
 
 // ignore: one_member_abstracts
 abstract class IHomeProvider {
