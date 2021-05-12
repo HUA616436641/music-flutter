@@ -1,7 +1,10 @@
 import 'package:cloud_music/entity/user_profile.dart';
 import 'package:cloud_music/pages/login/data/login_repository.dart';
+import 'package:cloud_music/pages/splash/controllers/main_controller.dart';
+import 'package:cloud_music/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   final ILoginRepository loginRepository;
@@ -16,7 +19,6 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    print(UserProfile.fromJson(testAccount));
     mobileController = TextEditingController();
     pwdController = TextEditingController();
     focusNode = FocusNode();
@@ -47,7 +49,13 @@ class LoginController extends GetxController {
   }
 
   void login() async {
-    await loginRepository.loginCellphone(phone: phone, pwd: pwd);
+    final userProfile =
+        await loginRepository.loginCellphone(phone: phone, pwd: pwd);
+    if (userProfile == null) return;
+    Get.find<MainController>().userProfile = userProfile;
+    final box = GetStorage();
+    box.write('userProfile', userProfile.toJson());
+    Get.toNamed(Routes.HOME);
   }
 
   toMobilePage() {

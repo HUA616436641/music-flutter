@@ -18,8 +18,8 @@ class UserProfile {
   final bool followed;
   final String backgroundUrl;
   final String detailDescription;
-  final int avatarImgIdStr;
-  final int backgroundImgIdStr;
+  final String avatarImgIdStr;
+  final String backgroundImgIdStr;
   final int userId;
   final int userType;
   final int birthday;
@@ -100,6 +100,40 @@ class UserProfile {
       playlistCount: json['playlistCount'],
       playlistBeSubscribedCount: json['playlistBeSubscribedCount'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'vipType': vipType,
+      'djStatus': djStatus,
+      'experts': experts,
+      'city': city,
+      'avatarUrl': avatarUrl,
+      'defaultAvatar': defaultAvatar,
+      'province': province,
+      'backgroundImgId': backgroundImgId,
+      'mutual': mutual,
+      'authStatus': authStatus,
+      'avatarImgId': avatarImgId,
+      'gender': gender,
+      'accountStatus': accountStatus,
+      'followed': followed,
+      'backgroundUrl': backgroundUrl,
+      'detailDescription': detailDescription,
+      'avatarImgIdStr': avatarImgIdStr,
+      'backgroundImgIdStr': backgroundImgIdStr,
+      'userId': userId,
+      'userType': userType,
+      'birthday': birthday,
+      'nickname': nickname,
+      'signature': signature,
+      'authority': authority,
+      'followeds': followeds,
+      'follows': follows,
+      'eventCount': eventCount,
+      'playlistCount': playlistCount,
+      'playlistBeSubscribedCount': playlistBeSubscribedCount,
+    };
   }
 }
 

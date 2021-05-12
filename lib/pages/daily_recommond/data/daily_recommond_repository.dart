@@ -1,9 +1,10 @@
 import 'package:cloud_music/pages/home/domain/entity/banner.dart';
+import 'package:cloud_music/pages/home/domain/entity/song.dart';
 
 import 'daily_recommond_provider.dart';
 
 abstract class IDailyRecRepository {
-  Future<List<SongList>> getDailyRecSongs();
+  Future<List<Song>> getDailyRecSongs();
 }
 
 class DailyRecRepository implements IDailyRecRepository {
@@ -11,7 +12,7 @@ class DailyRecRepository implements IDailyRecRepository {
   final IDailyRecProvider provider;
 
   @override
-  Future<List<SongList>> getDailyRecSongs() async {
+  Future<List<Song>> getDailyRecSongs() async {
     try {
       final cases = await provider.getDailyRecSongs();
       if (cases.status.hasError) {
