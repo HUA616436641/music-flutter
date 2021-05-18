@@ -1,5 +1,3 @@
-import 'package:cloud_music/pages/home/domain/entity/artist.dart';
-
 class Album {
   final int id;
   final String name;

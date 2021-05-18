@@ -1,4 +1,3 @@
-import 'package:cloud_music/entity/user_profile.dart';
 import 'package:cloud_music/pages/login/data/login_repository.dart';
 import 'package:cloud_music/pages/splash/controllers/main_controller.dart';
 import 'package:cloud_music/routes/app_pages.dart';

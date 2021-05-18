@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 
 class BlurBackground extends StatelessWidget {
   final Widget child;
-  BlurBackground({required this.child});
+  final ImageProvider? image;
+  final double _sigmaX;
+  final double _sigmaY;
+  BlurBackground(
+      {required this.child, double? sigmaX, double? sigmaY, this.image})
+      : _sigmaX = sigmaX ?? 1,
+        _sigmaY = sigmaY ?? 1;
   @override
   Widget build(BuildContext context) {
     return Stack(fit: StackFit.expand, children: [
@@ -13,15 +19,16 @@ class BlurBackground extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(Colors.black26, BlendMode.darken),
-            image: AssetImage(
-              // "assets/images/aaa.jpg",
-              "assets/images/bbb.jpg",
-            ),
+            image: image ??
+                AssetImage(
+                  // "assets/images/aaa.jpg",
+                  "assets/images/bbb.jpg",
+                ),
           ),
         ),
       ),
       BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+        filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
         child: child,
       )
     ]);

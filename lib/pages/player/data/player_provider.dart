@@ -3,17 +3,11 @@ import 'package:cloud_music/pages/home/domain/entity/song.dart';
 import 'package:get/get.dart';
 
 // ignore: one_member_abstracts
-abstract class IDailyRecProvider {
+abstract class IPlayerProvider {
   Future<Response<List<Song>>> getDailyRecSongs();
 }
 
-class DailyRecProvider extends BaseProvider implements IDailyRecProvider {
-  @override
-  void onInit() {
-    httpClient.baseUrl = 'https://netease-cloud-music-api-murex.vercel.app';
-    super.onInit();
-  }
-
+class PlayerProvider extends BaseProvider implements IPlayerProvider {
   @override
   Future<Response<List<Song>>> getDailyRecSongs() {
     return get('/recommend/songs', decoder: parseSongList);
@@ -29,9 +23,7 @@ class DailyRecProvider extends BaseProvider implements IDailyRecProvider {
   List<Song> parseSongList(json) {
     final res = json as Map<String, dynamic>;
     return (res['data']['dailySongs'] as List)
-        .map(
-          (e) => Song.fromJson(e),
-        )
+        .map((e) => Song.fromJson(e))
         .toList();
   }
 }

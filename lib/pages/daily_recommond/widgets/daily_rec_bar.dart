@@ -12,9 +12,24 @@ class DailyRecBar extends StatelessWidget {
       return Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-            fit: BoxFit.cover,
+          // Image.network(
+          //   'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+          //   fit: BoxFit.cover,
+          // ),
+          Container(
+            height: 300,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Colors.blue.withOpacity(0.6),
+                  Colors.blue.withOpacity(0)
+                ], // red to yellow
+                tileMode:
+                    TileMode.repeated, // repeats the gradient over the canvas
+              ),
+            ),
           ),
           SafeArea(
               child: Align(
@@ -24,7 +39,7 @@ class DailyRecBar extends StatelessWidget {
               child: Opacity(
                 opacity: opacity,
                 child: Text(
-                  '推荐歌单',
+                  '每日推荐',
                   style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
               ),

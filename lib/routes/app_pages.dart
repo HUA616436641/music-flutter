@@ -1,9 +1,10 @@
 import 'package:cloud_music/pages/daily_recommond/bindings/daily_rec_bingding.dart';
 import 'package:cloud_music/pages/daily_recommond/views/daily_rec_page.dart';
-import 'package:cloud_music/pages/home/views/details_view.dart';
 import 'package:cloud_music/pages/home/views/home_page.dart';
 import 'package:cloud_music/pages/login/bindings/login_binding.dart';
 import 'package:cloud_music/pages/login/views/login_page.dart';
+import 'package:cloud_music/pages/player/bindings/player_bingding.dart';
+import 'package:cloud_music/pages/player/views/player_page.dart';
 import 'package:cloud_music/pages/splash/views/splash.dart';
 import 'package:get/get.dart';
 
@@ -33,12 +34,11 @@ class AppPages {
       name: Routes.DailyRec,
       page: () => DailyRecPage(),
       binding: DailyRecBinding(),
-      children: [
-        GetPage(
-          name: Routes.DETAILS,
-          page: () => DetailsView(),
-        ),
-      ],
+    ),
+    GetPage(
+      name: Routes.PLAYER,
+      page: () => PlayerPage(),
+      binding: PlayerBinding(),
     ),
   ];
 }

@@ -1,14 +1,14 @@
 import 'package:cloud_music/pages/home/domain/entity/song.dart';
 
-import 'daily_recommond_provider.dart';
+import 'player_provider.dart';
 
-abstract class IDailyRecRepository {
+abstract class IPlayerRepository {
   Future<List<Song>> getDailyRecSongs();
 }
 
-class DailyRecRepository implements IDailyRecRepository {
-  DailyRecRepository({required this.provider});
-  final IDailyRecProvider provider;
+class PlayerRepository implements IPlayerRepository {
+  PlayerRepository({required this.provider});
+  final IPlayerProvider provider;
 
   @override
   Future<List<Song>> getDailyRecSongs() async {
