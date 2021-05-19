@@ -32,6 +32,7 @@ dependencies:
   animations: ^2.0.0
   pinput: ^1.2.0
   fluttertoast: ^8.0.6
+  just_audio: ^0.7.4+1
 #get_test: ^3.13.3
 
 

@@ -8,10 +8,12 @@ class PlayerMiddle extends GetView<PlayerController> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.switchContent,
-            child: getMiddleContent()));
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: controller.switchContent,
+        child: getMiddleContent(),
+      ),
+    );
   }
 
   Widget getMiddleContent() {
