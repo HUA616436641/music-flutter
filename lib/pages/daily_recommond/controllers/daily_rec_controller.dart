@@ -16,6 +16,6 @@ class DailyRecController extends GetxController {
   }
 
   void openPlayer(Song song) {
-    Get.toNamed(Routes.PLAYER, arguments: song);
+    Get.toNamed(Routes.PLAYER, arguments: {'song': song, 'playlist': songList});
   }
 }

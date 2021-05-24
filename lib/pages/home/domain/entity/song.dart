@@ -5,11 +5,13 @@ import 'album.dart';
 class Song {
   final int id;
   final String name;
+  final String? url;
   final List<Artist> artistList;
   final Album album;
   Song({
     required this.id,
     required this.name,
+    this.url,
     this.artistList = const [],
     required this.album,
   });

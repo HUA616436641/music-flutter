@@ -10,6 +10,6 @@ class PlayerBinding extends Bindings {
     Get.lazyPut<IPlayerRepository>(
         () => PlayerRepository(provider: Get.find<IPlayerProvider>()));
     Get.lazyPut(() =>
-        PlayerController(dailyRecRepository: Get.find<IPlayerRepository>()));
+        PlayerController(playerRepository: Get.find<IPlayerRepository>()));
   }
 }

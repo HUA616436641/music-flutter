@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class PlayerPage extends GetView<PlayerController> {
   final Song song;
-  PlayerPage() : song = Get.arguments;
+  PlayerPage() : song = Get.arguments['song'];
   @override
   Widget build(BuildContext context) {
     return BlurBackground(

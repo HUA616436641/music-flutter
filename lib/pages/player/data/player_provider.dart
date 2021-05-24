@@ -1,29 +1,24 @@
 import 'package:cloud_music/common/provider/base_provider.dart';
-import 'package:cloud_music/pages/home/domain/entity/song.dart';
 import 'package:get/get.dart';
 
-// ignore: one_member_abstracts
 abstract class IPlayerProvider {
-  Future<Response<List<Song>>> getDailyRecSongs();
+  Future<Response<List<String>>> getSongUrls(List<int> songIds);
 }
 
 class PlayerProvider extends BaseProvider implements IPlayerProvider {
   @override
-  Future<Response<List<Song>>> getDailyRecSongs() {
-    return get('/recommend/songs', decoder: parseSongList);
-    // try {
-    //   final res = await get('/recommend/resource', decoder: parseSongList);
-    //   return res;
-    // } catch (e) {
-    //   print(e.toString());
-    //   return Future.value(Response<List<SongList>>(body: []));
-    // }
+  Future<Response<List<String>>> getSongUrls(List<int> songIds) {
+    final query = {'id': songIds.join(',')};
+    return get('/song/url',
+        query: query, decoder: (json) => parseSongList(songIds, json));
   }
 
-  List<Song> parseSongList(json) {
+  List<String> parseSongList(List<int> songIds, json) {
     final res = json as Map<String, dynamic>;
-    return (res['data']['dailySongs'] as List)
-        .map((e) => Song.fromJson(e))
-        .toList();
+    final songList = res['data'] as List;
+    return songIds.map((e) {
+      final originData = songList.firstWhere((element) => element['id'] == e);
+      return originData['url'] as String;
+    }).toList();
   }
 }

@@ -1,9 +1,7 @@
-import 'package:cloud_music/pages/home/domain/entity/song.dart';
-
 import 'player_provider.dart';
 
 abstract class IPlayerRepository {
-  Future<List<Song>> getDailyRecSongs();
+  Future<List<String>> getSongUrls(List<int> songIds);
 }
 
 class PlayerRepository implements IPlayerRepository {
@@ -11,9 +9,9 @@ class PlayerRepository implements IPlayerRepository {
   final IPlayerProvider provider;
 
   @override
-  Future<List<Song>> getDailyRecSongs() async {
+  Future<List<String>> getSongUrls(List<int> songIds) async {
     try {
-      final cases = await provider.getDailyRecSongs();
+      final cases = await provider.getSongUrls(songIds);
       if (cases.status.hasError) {
         return Future.error(cases.statusText!);
       } else {
