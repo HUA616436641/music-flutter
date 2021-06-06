@@ -20,9 +20,14 @@ class PlayerMiddlePic extends GetView<PlayerController> {
                     width: Get.width - 100,
                     height: Get.width - 100,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: NetworkImage(controller.song.album.picUrl))),
+                      shape: BoxShape.circle,
+                      image: controller.currentSong == null
+                          ? null
+                          : DecorationImage(
+                              image: NetworkImage(
+                                  controller.currentSong!.album.picUrl),
+                            ),
+                    ),
                   ),
                 );
               }),

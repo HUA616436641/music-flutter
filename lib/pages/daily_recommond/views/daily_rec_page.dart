@@ -1,6 +1,7 @@
 import 'package:cloud_music/pages/daily_recommond/controllers/daily_rec_controller.dart';
 import 'package:cloud_music/pages/daily_recommond/widgets/daily_rec_bar.dart';
 import 'package:cloud_music/widgets/blur_background.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
@@ -60,22 +61,25 @@ class DailyRecPage extends GetView<DailyRecController> {
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       final s = controller.songList[index];
-                      final artistName =
-                          s.artistList.map((e) => e.name).join('/');
+                      final artistName = s.artistName;
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16),
                         child: GestureDetector(
-                          onTap: () => controller.openPlayer(s),
+                          onTap: () => controller.openPlayer(index),
                           child: Row(
                             children: [
                               Container(
                                 width: 45,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    image: DecorationImage(
-                                        image: NetworkImage(s.album.picUrl))),
+                                  borderRadius: BorderRadius.circular(4),
+                                  image: DecorationImage(
+                                    image: ExtendedNetworkImageProvider(
+                                        s.album.picUrl,
+                                        cache: true),
+                                  ),
+                                ),
                               ),
                               SizedBox(width: 8),
                               Expanded(

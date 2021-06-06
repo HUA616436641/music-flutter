@@ -8,6 +8,9 @@ class Song {
   final String? url;
   final List<Artist> artistList;
   final Album album;
+
+  String get artistName => artistList.map((e) => e.name).join('/');
+
   Song({
     required this.id,
     required this.name,

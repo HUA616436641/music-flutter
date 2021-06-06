@@ -33,6 +33,8 @@ dependencies:
   pinput: ^1.2.0
   fluttertoast: ^8.0.6
   just_audio: ^0.7.4+1
+  extended_image: ^4.1.0
+  sliding_up_panel: ^2.0.0+1
 #get_test: ^3.13.3
 
 

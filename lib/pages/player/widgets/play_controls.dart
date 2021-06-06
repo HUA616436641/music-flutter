@@ -93,7 +93,11 @@ class ControlButtons extends StatelessWidget {
         StreamBuilder<SequenceState?>(
           stream: player.sequenceStateStream,
           builder: (context, snapshot) => IconButton(
-            icon: Icon(Icons.skip_previous),
+            icon: Icon(
+              Icons.skip_previous,
+              color: Colors.white70,
+              size: 40,
+            ),
             onPressed: player.hasPrevious ? player.seekToPrevious : null,
           ),
         ),
@@ -107,25 +111,38 @@ class ControlButtons extends StatelessWidget {
                 processingState == ProcessingState.buffering) {
               return Container(
                 margin: EdgeInsets.all(8.0),
-                width: 64.0,
-                height: 64.0,
-                child: CircularProgressIndicator(),
+                width: 48.0,
+                height: 48.0,
+                child: CircularProgressIndicator(
+                  color: Colors.black87,
+                  // value: 2,
+                  strokeWidth: 3,
+                ),
               );
             } else if (playing != true) {
               return IconButton(
-                icon: Icon(Icons.play_arrow),
+                icon: Icon(
+                  Icons.play_arrow,
+                  color: Colors.white70,
+                ),
                 iconSize: 64.0,
                 onPressed: player.play,
               );
             } else if (processingState != ProcessingState.completed) {
               return IconButton(
-                icon: Icon(Icons.pause),
+                icon: Icon(
+                  Icons.pause,
+                  color: Colors.white70,
+                ),
                 iconSize: 64.0,
                 onPressed: player.pause,
               );
             } else {
               return IconButton(
-                icon: Icon(Icons.replay),
+                icon: Icon(
+                  Icons.replay,
+                  color: Colors.white70,
+                ),
                 iconSize: 64.0,
                 onPressed: () => player.seek(Duration.zero,
                     index: player.effectiveIndices!.first),
@@ -136,27 +153,23 @@ class ControlButtons extends StatelessWidget {
         StreamBuilder<SequenceState?>(
           stream: player.sequenceStateStream,
           builder: (context, snapshot) => IconButton(
-            icon: Icon(Icons.skip_next),
+            icon: Icon(
+              Icons.skip_next,
+              color: Colors.white70,
+              size: 40,
+            ),
             onPressed: player.hasNext ? player.seekToNext : null,
           ),
         ),
-        StreamBuilder<double>(
-          stream: player.speedStream,
-          builder: (context, snapshot) => IconButton(
-            icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              _showSliderDialog(
-                context: context,
-                title: "Adjust speed",
-                divisions: 10,
-                min: 0.5,
-                max: 1.5,
-                stream: player.speedStream,
-                onChanged: player.setSpeed,
-              );
-            },
+        IconButton(
+          icon: Icon(
+            Icons.playlist_play_rounded,
+            color: Colors.white70,
+            size: 40,
           ),
+          onPressed: () {
+            Get.find<PlayerController>().showPlaylistSlidingSheet();
+          },
         ),
       ],
     );
@@ -201,12 +214,15 @@ class _SeekBarState extends State<SeekBar> {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
       child: Row(
         children: [
-          Text(
-            RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
-                    .firstMatch("${widget.position}")
-                    ?.group(1) ??
-                '$_remaining',
-            style: TextStyle(fontSize: 12, color: Colors.white54),
+          SizedBox(
+            width: 35,
+            child: Text(
+              RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
+                      .firstMatch("${widget.position}")
+                      ?.group(1) ??
+                  '$_remaining',
+              style: TextStyle(fontSize: 12, color: Colors.white54),
+            ),
           ),
           Expanded(
             child: SliderTheme(
@@ -242,12 +258,15 @@ class _SeekBarState extends State<SeekBar> {
               ),
             ),
           ),
-          Text(
-            RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
-                    .firstMatch("${widget.duration}")
-                    ?.group(1) ??
-                '$_remaining',
-            style: TextStyle(fontSize: 12, color: Colors.white54),
+          SizedBox(
+            width: 35,
+            child: Text(
+              RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
+                      .firstMatch("${widget.duration}")
+                      ?.group(1) ??
+                  '$_remaining',
+              style: TextStyle(fontSize: 12, color: Colors.white54),
+            ),
           )
         ],
       ),
@@ -255,67 +274,6 @@ class _SeekBarState extends State<SeekBar> {
   }
 
   Duration get _remaining => widget.duration - widget.position;
-}
-
-void _showSliderDialog({
-  required BuildContext context,
-  required String title,
-  required int divisions,
-  required double min,
-  required double max,
-  String valueSuffix = '',
-  required Stream<double> stream,
-  required ValueChanged<double> onChanged,
-}) {
-  showDialog<void>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title, textAlign: TextAlign.center),
-      content: StreamBuilder<double>(
-        stream: stream,
-        builder: (context, snapshot) => Container(
-          height: 100.0,
-          child: Column(
-            children: [
-              Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
-                  style: TextStyle(
-                      fontFamily: 'Fixed',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0)),
-              Slider(
-                divisions: divisions,
-                min: min,
-                max: max,
-                value: snapshot.data ?? 1.0,
-                onChanged: onChanged,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-class HiddenThumbComponentShape extends SliderComponentShape {
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) => Size.zero;
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset center, {
-    required Animation<double> activationAnimation,
-    required Animation<double> enableAnimation,
-    required bool isDiscrete,
-    required TextPainter labelPainter,
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required TextDirection textDirection,
-    required double value,
-    required double textScaleFactor,
-    required Size sizeWithOverflow,
-  }) {}
 }
 
 class PositionData {
