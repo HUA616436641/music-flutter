@@ -1,5 +1,4 @@
 import 'package:cloud_music/extention/audio_extention.dart';
-import 'package:cloud_music/pages/home/domain/entity/song.dart';
 import 'package:cloud_music/pages/player/controllers/player_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

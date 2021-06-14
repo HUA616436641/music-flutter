@@ -101,54 +101,58 @@ class ControlButtons extends StatelessWidget {
             onPressed: player.hasPrevious ? player.seekToPrevious : null,
           ),
         ),
-        StreamBuilder<PlayerState>(
-          stream: player.playerStateStream,
-          builder: (context, snapshot) {
-            final playerState = snapshot.data;
-            final processingState = playerState?.processingState;
-            final playing = playerState?.playing;
-            if (processingState == ProcessingState.loading ||
-                processingState == ProcessingState.buffering) {
-              return Container(
-                margin: EdgeInsets.all(8.0),
-                width: 48.0,
-                height: 48.0,
-                child: CircularProgressIndicator(
-                  color: Colors.black87,
-                  // value: 2,
-                  strokeWidth: 3,
-                ),
-              );
-            } else if (playing != true) {
-              return IconButton(
-                icon: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white70,
-                ),
-                iconSize: 64.0,
-                onPressed: player.play,
-              );
-            } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                icon: Icon(
-                  Icons.pause,
-                  color: Colors.white70,
-                ),
-                iconSize: 64.0,
-                onPressed: player.pause,
-              );
-            } else {
-              return IconButton(
-                icon: Icon(
-                  Icons.replay,
-                  color: Colors.white70,
-                ),
-                iconSize: 64.0,
-                onPressed: () => player.seek(Duration.zero,
-                    index: player.effectiveIndices!.first),
-              );
-            }
-          },
+        SizedBox(
+          height: 80,
+          width: 80,
+          child: StreamBuilder<PlayerState>(
+            stream: player.playerStateStream,
+            builder: (context, snapshot) {
+              final playerState = snapshot.data;
+              final processingState = playerState?.processingState;
+              final playing = playerState?.playing;
+              if (processingState == ProcessingState.loading ||
+                  processingState == ProcessingState.buffering) {
+                return Container(
+                  margin: EdgeInsets.all(8.0),
+                  width: 48.0,
+                  height: 48.0,
+                  child: CircularProgressIndicator(
+                    color: Colors.black87,
+                    // value: 2,
+                    strokeWidth: 3,
+                  ),
+                );
+              } else if (playing != true) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white70,
+                  ),
+                  iconSize: 64.0,
+                  onPressed: player.play,
+                );
+              } else if (processingState != ProcessingState.completed) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.pause,
+                    color: Colors.white70,
+                  ),
+                  iconSize: 64.0,
+                  onPressed: player.pause,
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(
+                    Icons.replay,
+                    color: Colors.white70,
+                  ),
+                  iconSize: 64.0,
+                  onPressed: () => player.seek(Duration.zero,
+                      index: player.effectiveIndices!.first),
+                );
+              }
+            },
+          ),
         ),
         StreamBuilder<SequenceState?>(
           stream: player.sequenceStateStream,
@@ -204,7 +208,7 @@ class _SeekBarState extends State<SeekBar> {
     super.didChangeDependencies();
 
     _sliderThemeData = SliderTheme.of(context).copyWith(
-      trackHeight: 2.0,
+      trackHeight: 1.0,
     );
   }
 

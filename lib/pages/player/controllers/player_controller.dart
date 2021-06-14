@@ -1,13 +1,18 @@
 import 'package:cloud_music/pages/home/domain/entity/song.dart';
 import 'package:cloud_music/pages/player/data/player_repository.dart';
+import 'package:cloud_music/pages/player/entity/lyric.dart';
 import 'package:cloud_music/shared/logger/logger_utils.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 enum UpdateIds {
   playlist,
+  volume,
+  lrc,
 }
 
 class PlayerController extends GetxController
@@ -20,11 +25,17 @@ class PlayerController extends GetxController
   RxList<Song> get playlist => _playlist;
   late AnimationController rotateController;
   late AudioPlayer audioPlayer;
-  late ConcatenatingAudioSource _playSources;
+  ConcatenatingAudioSource _playSources =
+      ConcatenatingAudioSource(children: []);
   ConcatenatingAudioSource get playSources => _playSources;
 
   PanelController slidingController = PanelController();
+
+  AutoScrollController lrcController = AutoScrollController();
   Song? currentSong;
+
+  Lyric? lyric;
+  int? lyricIndex;
   @override
   void onInit() async {
     playIndex = Get.arguments['playIndex'];
@@ -34,10 +45,37 @@ class PlayerController extends GetxController
           ..repeat();
     audioPlayer = AudioPlayer();
     // var duration = await audioPlayer.setUrl(song.);
-    audioPlayer.currentIndexStream.listen((index) {
+    audioPlayer.currentIndexStream.listen((index) async {
       currentSong = index == null
           ? null
           : (_playSources.children[index] as UriAudioSource).tag;
+      if (currentSong != null) {
+        lyric = await playerRepository.getLyric(currentSong!.id);
+        update([UpdateIds.lrc]);
+      }
+    });
+    audioPlayer.positionStream.listen((position) {
+      // print(position.inMilliseconds);
+      // print(lyric?.lrcItems.map((e) =>Duration).toList());
+      // lrcController.
+      if (lyric == null) return;
+      for (int i = 0; i < lyric!.lrcItems.length; i++) {
+        final pre = lyric!.lrcItems[i].item1;
+        final next = i == lyric!.lrcItems.length - 1
+            ? lyric!.lrcItems[i].item1
+            : lyric!.lrcItems[i + 1].item1;
+        if (position >= pre && position < next) {
+          lyricIndex = i;
+          lrcController
+            ..cancelAllHighlights()
+            ..highlight(i);
+          lrcController.scrollToIndex(i,
+              duration: Duration(milliseconds: 600),
+              preferPosition: AutoScrollPosition.middle);
+          print('$position $i');
+          break;
+        }
+      }
     });
     _playlist.addListener(GetStream(onListen: () async {
       Logger.write('playlist changed');
@@ -47,6 +85,7 @@ class PlayerController extends GetxController
       if (_playlist.length != urls.length) {
         Logger.write('urls获取错误');
       }
+
       _playSources = ConcatenatingAudioSource(
           children: urls.map((e) {
         final index = urls.indexOf(e);
@@ -56,7 +95,9 @@ class PlayerController extends GetxController
           tag: song,
         );
       }).toList());
-      audioPlayer.setAudioSource(_playSources, initialIndex: playIndex);
+      audioPlayer.setAudioSource(_playSources, initialIndex: playIndex).then(
+            (value) => audioPlayer.play(),
+          );
     }));
     update();
     super.onInit();
@@ -97,5 +138,14 @@ class PlayerController extends GetxController
       _playlist.value = playlist;
     }
     return audioPlayer.seek(Duration.zero, index: index);
+  }
+
+  Future<void> setVolume(double val) async {
+    await audioPlayer.setVolume(val);
+    update([UpdateIds.volume]);
+  }
+
+  Future<Lyric?> getLyric(int songId) async {
+    return playerRepository.getLyric(songId);
   }
 }

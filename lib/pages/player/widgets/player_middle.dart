@@ -1,4 +1,5 @@
 import 'package:cloud_music/pages/player/controllers/player_controller.dart';
+import 'package:cloud_music/pages/player/widgets/play_controls.dart';
 import 'package:cloud_music/pages/player/widgets/player_middle_lyric.dart';
 import 'package:cloud_music/pages/player/widgets/player_middle_pic.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,12 @@ class PlayerMiddle extends GetView<PlayerController> {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: controller.switchContent,
-        child: getMiddleContent(),
+        child: Column(
+          children: [
+            Expanded(child: getMiddleContent()),
+            PlayControls(),
+          ],
+        ),
       ),
     );
   }

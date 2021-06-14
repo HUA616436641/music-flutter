@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MarqueeText extends StatefulWidget {
   final String text;
@@ -10,12 +12,14 @@ class MarqueeText extends StatefulWidget {
   _MarqueeTextState createState() => _MarqueeTextState();
 }
 
+const double _sizedBoxWidth = 10;
+
 class _MarqueeTextState extends State<MarqueeText> {
   late ScrollController _scrollController;
   late bool isOverflow;
   late double textWidth;
   late double maxWidth;
-  late Timer _timer;
+  Timer? _timer;
   late String _text;
   @override
   void initState() {
@@ -23,18 +27,26 @@ class _MarqueeTextState extends State<MarqueeText> {
     _scrollController = ScrollController();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       if (isOverflow) {
-        _text = '    ${widget.text}    ';
+        _text = '${widget.text}';
         Future.delayed(Duration(seconds: 1), () {
           double offset = 0;
           bool forward = true;
+          bool paused = false;
+          Future<void> stopAnimation() async {
+            paused = true;
+            return Future.delayed(1000.milliseconds, () {
+              paused = false;
+            });
+          }
+
           _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
-            if (offset == textWidth - maxWidth) {
-              forward = false;
+            if (paused) return;
+            if (offset == textWidth + _sizedBoxWidth * 2 - maxWidth) {
+              stopAnimation().then((value) => forward = false);
             }
             if (offset == 0) {
-              forward = true;
+              stopAnimation().then((value) => forward = true);
             }
-
             _scrollController.jumpTo(forward ? offset++ : offset--);
           });
         });
@@ -54,8 +66,9 @@ class _MarqueeTextState extends State<MarqueeText> {
         controller: _scrollController,
         child: Row(
           children: [
-            if (isOverflow) SizedBox(width: 100),
+            if (isOverflow) SizedBox(width: _sizedBoxWidth),
             Text(_text, style: widget.style),
+            if (isOverflow) SizedBox(width: _sizedBoxWidth),
           ],
         ),
       );
@@ -73,7 +86,7 @@ class _MarqueeTextState extends State<MarqueeText> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     _scrollController.dispose();
     super.dispose();
   }

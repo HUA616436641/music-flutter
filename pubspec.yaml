@@ -35,6 +35,8 @@ dependencies:
   just_audio: ^0.7.4+1
   extended_image: ^4.1.0
   sliding_up_panel: ^2.0.0+1
+  tuple: ^2.0.0
+  scroll_to_index: ^2.0.0
 #get_test: ^3.13.3
 
 
